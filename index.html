@@ -1,33 +1,628 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fa" dir="rtl">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>خانه علوم | وبسایت آموزشی</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-      body {
-        font-family: 'Vazirmatn', sans-serif;
-      }
-    </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
-    "react/": "https://aistudiocdn.com/react@^19.1.1/",
-    "react": "https://aistudiocdn.com/react@^19.1.1"
-  }
-}
-</script>
-<link rel="stylesheet" href="/index.css">
+
+<head>
+  <meta charset="utf-f" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>خانه‌پایه می‌آموزد</title>
+
+  <!-- Google Fonts (Vazirmatn) -->
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f8f9fa;
+      --card: #ffffff;
+      --primary: #ff8c00;
+      /* نارنجی جذاب‌تر */
+      --accent: #ffae42;
+      --muted: #6c757d;
+      --text: #212529;
+      --shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      --green: #28a745;
+      --glass: rgba(255, 255, 255, 0.7);
+      --radius: 16px;
+      --transition: all 0.3s ease-in-out;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Vazirmatn", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    /* ====== Header ====== */
+    .site-header {
+      background: var(--glass);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 12px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mark {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 12px rgba(255, 140, 0, 0.4);
+    }
+
+    .header-nav {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .header-nav a {
+      padding: 8px 12px;
+      border-radius: 8px;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .header-nav a:hover,
+    .header-nav a.active {
+      color: var(--primary);
+      background: rgba(255, 140, 0, 0.1);
+    }
+
+    .hamburger {
+      display: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: var(--card);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      border: 0;
+      z-index: 130;
+      /* بالاتر از منو */
+    }
+
+    /* ====== Mobile Menu ====== */
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      z-index: 120;
+      background: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+
+    .mobile-menu.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .mobile-drawer {
+      position: absolute;
+      right: -100%;
+      top: 0;
+      width: 320px;
+      max-width: 85%;
+      height: 100%;
+      background: var(--card);
+      padding: 24px;
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: right 0.4s ease-in-out;
+    }
+
+    .mobile-menu.open .mobile-drawer {
+      right: 0;
+    }
+
+    .mobile-drawer .close-btn {
+      align-self: flex-start;
+      background: transparent;
+      border: 1px solid #eee;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .mobile-drawer a {
+      display: block;
+      padding: 12px 8px;
+      border-radius: 8px;
+      font-weight: 500;
+    }
+
+    .mobile-drawer a:hover {
+      background: #f1f1f1;
+    }
+
+
+    /* ====== Hero Section ====== */
+    .hero {
+      margin-top: 16px;
+      border-radius: var(--radius);
+      padding: 48px;
+      background: linear-gradient(110deg, #fff5e6, #ffe0b3);
+      box-shadow: var(--shadow);
+      display: flex;
+      gap: 32px;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .hero .left {
+      flex: 1;
+    }
+
+    .hero h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #4d3200;
+    }
+
+    .hero p {
+      color: #7a5c2f;
+      font-size: 1rem;
+      margin-bottom: 24px;
+    }
+
+    .hero .badges {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.7);
+      padding: 8px 16px;
+      border-radius: 999px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .hero .illustration {
+      width: 280px;
+      height: 180px;
+    }
+    
+    .hero .illustration img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+
+    /* ====== Cards Grid ====== */
+    .section {
+      margin-top: 48px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .section h4 {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .view-more {
+      background: var(--primary);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(255, 140, 0, 0.3);
+      transition: var(--transition);
+    }
+    
+    .view-more:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(255, 140, 0, 0.4);
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition);
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+    }
+
+    .card .media {
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.5rem;
+      position: relative;
+    }
+    
+    .ribbon {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        background: #dc3545;
+        color: #fff;
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .card .body {
+      padding: 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .card .title {
+      font-weight: 700;
+      color: var(--text);
+      font-size: 1.1rem;
+    }
+
+    .card .meta {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    
+    .card .price-row {
+        margin-top: auto;
+        padding-top: 12px;
+        border-top: 1px solid #f1f1f1;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .price {
+        font-weight: 700;
+        color: var(--green);
+        font-size: 1.2rem;
+    }
+
+    /* ====== Footer ====== */
+    .site-footer {
+        background: #fff;
+        border-top: 1px solid rgba(0,0,0,0.05);
+        padding: 48px 0;
+        margin-top: 64px;
+        font-size: 15px;
+    }
+
+    .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 32px;
+    }
+
+    .footer-col h5 {
+        font-size: 1.1rem;
+        margin-bottom: 16px;
+        font-weight: 700;
+    }
+    
+    .footer-links ul {
+        list-style: none;
+    }
+
+    .footer-links a {
+        padding: 8px 0;
+        display: inline-block;
+        color: var(--muted);
+    }
+    
+    .footer-links a:hover {
+        color: var(--primary);
+    }
+    
+    .footer-bottom {
+        margin-top: 32px;
+        padding-top: 24px;
+        border-top: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 16px;
+        color: var(--muted);
+        font-size: 14px;
+    }
+    
+    /* ====== Responsive ====== */
+    @media (max-width: 992px) {
+        .header-nav {
+            display: none;
+        }
+        .hamburger {
+            display: grid;
+        }
+        .hero {
+            flex-direction: column;
+            text-align: center;
+            padding: 32px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .wrap {
+            padding: 16px;
+        }
+        .hero h2 {
+            font-size: 1.8rem;
+        }
+        .cards-grid {
+            grid-template-columns: 1fr;
+        }
+        .footer-grid {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+        .footer-bottom {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+  </style>
 </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
-  </body>
+
+<body>
+
+  <header class="site-header" role="banner">
+    <div class="wrap header-inner">
+      <div class="brand">
+        <div class="mark" aria-hidden="true">م</div>
+        <div>
+          <div style="font-weight:700; font-size: 1.1rem;">خانه‌پایه می‌آموزد</div>
+          <div style="font-size:13px;color:var(--muted)">آموزش کاربردی و در دسترس</div>
+        </div>
+      </div>
+
+      <nav class="header-nav" role="navigation">
+        <a href="/videos.html" class="active">ویدئوها</a>
+        <a href="/pamphlets.html">جزوات</a>
+        <a href="/shop.html">فروشگاه</a>
+        <a href="/contact.html">تماس</a>
+      </nav>
+
+      <button class="hamburger" id="hamburgerBtn" aria-label="باز کردن منو" aria-expanded="false">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true">
+    <div class="mobile-drawer">
+      <button class="close-btn" id="drawerCloseBtn">بستن</button>
+      <a href="/videos.html" role="menuitem">ویدئوها</a>
+      <a href="/pamphlets.html" role="menuitem">جزوات</a>
+      <a href="/shop.html" role="menuitem">فروشگاه</a>
+      <a href="/contact.html" role="menuitem">تماس با ما</a>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <section class="hero" aria-label="بنر اصلی">
+      <div class="left">
+        <h2>گروه رفع اشکال آنلاین</h2>
+        <p>با ورود به گروه رفع اشکال، سوالات خود را مستقیماً از اساتید بپرسید و مشاوره تخصصی دریافت کنید.</p>
+        <div class="badges">
+          <span class="badge">پاسخ‌دهی سریع</span>
+          <span class="badge">مشاوره رایگان</span>
+          <span class="badge">دسترسی ۲۴ ساعته</span>
+        </div>
+      </div>
+      <div class="illustration" aria-hidden="true">
+        <img src="https://via.placeholder.com/280x180/FFDAB9/8B4513?text=Illustration" alt="تصویر دانش‌آموز">
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h4>محتوای آموزشی پایه‌ها</h4>
+        <a class="view-more" href="/videos.html">مشاهده همه</a>
+      </div>
+
+      <div class="cards-grid">
+        <article class="card">
+          <div class="media" style="background-image:linear-gradient(180deg,#2b2f4a,#0f0f1a);">
+            <div class="ribbon">در حال ضبط</div>
+            پایه هفتم
+          </div>
+          <div class="body">
+            <h5 class="title">علوم تجربی هفتم</h5>
+            <p class="meta">دورهٔ جامع جمع‌بندی و آمادگی برای امتحانات</p>
+            <div class="price-row">
+              <span class="price">۳۷۰,۰۰۰ تومان</span>
+              <button style="background:var(--accent); color:#fff; border:0; border-radius:8px; padding:8px 14px; cursor: pointer;">مشاهده</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+            <div class="media" style="background-image:linear-gradient(180deg,#3b2a4d,#1b0f2a);">
+                <div class="ribbon" style="background: #28a745;">زنده</div>
+                پایه هشتم
+            </div>
+            <div class="body">
+                <h5 class="title">علوم تجربی هشتم</h5>
+                <p class="meta">شامل بیش از ۲۰۰۰ تست تمرینی و نمونه سوالات</p>
+                <div class="price-row">
+                    <span class="price">۴۲۰,۰۰۰ تومان</span>
+                    <button style="background:var(--accent); color:#fff; border:0; border-radius:8px; padding:8px 14px; cursor: pointer;">مشاهده</button>
+                </div>
+            </div>
+        </article>
+        
+        <article class="card">
+            <div class="media" style="background-image:linear-gradient(180deg,#243b26,#091f12);">
+                پایه نهم
+            </div>
+            <div class="body">
+                <h5 class="title">علوم تجربی نهم</h5>
+                <p class="meta">تدریس کامل مفاهیم + تست‌های طبقه‌بندی شده</p>
+                <div class="price-row">
+                    <span class="price">۴۹۰,۰۰۰ تومان</span>
+                    <button style="background:var(--accent); color:#fff; border:0; border-radius:8px; padding:8px 14px; cursor: pointer;">مشاهده</button>
+                </div>
+            </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-col">
+            <div style="display:flex;align-items:center;gap:12px; margin-bottom: 16px;">
+              <div class="mark">م</div>
+              <h3 style="font-size:1.2rem;">خانه‌پایه می‌آموزد</h3>
+            </div>
+            <p style="color:var(--muted);font-size:14px;">آموزش با کیفیت، در دسترس و مقرون‌به‌صرفه برای همه دانش‌آموزان ایران.</p>
+        </div>
+
+        <div class="footer-col footer-links">
+          <h5>دسترسی سریع</h5>
+          <ul>
+            <li><a href="/videos.html">ویدئوها</a></li>
+            <li><a href="/pamphlets.html">جزوات</a></li>
+            <li><a href="/shop.html">فروشگاه</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col footer-links">
+          <h5>پشتیبانی</h5>
+          <ul>
+            <li><a href="/faq.html">سؤالات متداول</a></li>
+            <li><a href="/terms.html">قوانین و مقررات</a></li>
+            <li><a href="/contact.html">تماس با ما</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© <span id="copy-year"></span> خانه‌پایه می‌آموزد. تمامی حقوق محفوظ است.</span>
+        <div class="socials" style="display: flex; gap: 16px;">
+          <a href="#" aria-label="تلگرام">Telegram</a>
+          <a href="#" aria-label="اینستاگرام">Instagram</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set current year
+      const yearSpan = document.getElementById('copy-year');
+      if(yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+      }
+
+      // Mobile menu functionality
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const drawerCloseBtn = document.getElementById('drawerCloseBtn');
+
+      const toggleMenu = (open) => {
+        mobileMenu.classList.toggle('open', open);
+        hamburgerBtn.setAttribute('aria-expanded', open);
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+
+      hamburgerBtn.addEventListener('click', () => {
+        const isExpanded = hamburgerBtn.getAttribute('aria-expanded') === 'true';
+        toggleMenu(!isExpanded);
+      });
+      
+      drawerCloseBtn.addEventListener('click', () => toggleMenu(false));
+      
+      // Close menu when clicking outside the drawer
+      mobileMenu.addEventListener('click', (e) => {
+        if (e.target === mobileMenu) {
+          toggleMenu(false);
+        }
+      });
+
+      // Close on Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+          toggleMenu(false);
+        }
+      });
+    });
+  </script>
+
+</body>
 </html>
