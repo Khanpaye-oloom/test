@@ -114,6 +114,7 @@
         border: none;
         cursor: pointer;
         transition: var(--transition);
+        display: inline-block;
     }
     
     .btn-primary {
@@ -130,8 +131,16 @@
 
     /* ====== Hero Section ====== */
     .hero {
-      padding: 80px 0;
+      padding: 60px 0;
       text-align: center;
+    }
+    
+    .hero-content {
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: center;
+      gap: 40px;
+      text-align: right;
     }
 
     .hero h1 {
@@ -146,16 +155,15 @@
     }
 
     .hero p {
-      max-width: 600px;
-      margin: 0 auto 32px;
+      max-width: 500px;
+      margin-bottom: 32px;
       font-size: 1.1rem;
       color: var(--text-light);
     }
 
     .hero-image {
-        margin-top: 40px;
-        border-radius: var(--radius-lg);
-        box-shadow: var(--shadow);
+        max-width: 500px;
+        margin: 0 auto;
     }
 
 
@@ -193,7 +201,12 @@
         border-radius: 50%;
         display: grid;
         place-items: center;
-        font-size: 2rem;
+    }
+    
+    .feature-card .icon svg {
+        width: 32px;
+        height: 32px;
+        color: var(--primary);
     }
     
     .feature-card h3 {
@@ -215,7 +228,7 @@
     
     .courses-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
         gap: 32px;
     }
     
@@ -329,6 +342,12 @@
     /* ====== Responsive ====== */
     .hamburger-menu { display: none; }
     
+    @media (min-width: 992px) {
+      .hero-content {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    
     @media (max-width: 992px) {
         .main-nav, .header-actions { display: none; }
         .hamburger-menu {
@@ -339,15 +358,10 @@
             font-size: 2rem;
             color: var(--text-dark);
         }
-        .courses-grid {
-            grid-template-columns: 1fr;
-        }
+        .hero-content { text-align: center; }
+        .hero p { margin-right: auto; margin-left: auto; }
     }
     
-    @media (max-width: 768px) {
-      .hero { padding: 40px 0; }
-    }
-
   </style>
 </head>
 
@@ -376,15 +390,20 @@
 
   <main>
     <section class="hero">
-      <div class="wrap">
-        <h1>
-          یادگیری <span class="highlight">علوم</span>،<br>ساده‌تر و جذاب‌تر از همیشه
-        </h1>
-        <p>
-          با ویدیوهای آموزشی، جزوات کامل و تمرین‌های طبقه‌بندی شده، درس علوم را به یکی از نقاط قوت خود تبدیل کنید.
-        </p>
-        <a href="#courses" class="btn btn-primary">مشاهده دوره‌های آموزشی</a>
-        <img src="https://via.placeholder.com/800x400/f0eeff/6d5cff?text=Science+Illustration" alt="تصویر گرافیکی مرتبط با علوم" class="hero-image">
+      <div class="wrap hero-content">
+        <div class="hero-text">
+          <h1>
+            یادگیری <span class="highlight">علوم</span>،<br>ساده‌تر و جذاب‌تر از همیشه
+          </h1>
+          <p>
+            با ویدیوهای آموزشی، جزوات کامل و تمرین‌های طبقه‌بندی شده، درس علوم را به یکی از نقاط قوت خود تبدیل کنید.
+          </p>
+          <a href="#courses" class="btn btn-primary">مشاهده دوره‌های آموزشی</a>
+        </div>
+        <div class="hero-image">
+          <!-- تصویر جدید جایگزین شد -->
+          <img src="https://cdni.iconscout.com/illustration/premium/thumb/scientist-doing-experiment-in-laboratory-4927943-4103560.png" alt="تصویر گرافیکی معلم علوم در آزمایشگاه">
+        </div>
       </div>
     </section>
 
@@ -393,17 +412,26 @@
             <h2 class="section-title">چرا خانه‌پایه؟</h2>
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="icon">🔬</div>
+                    <div class="icon">
+                        <!-- آیکون جدید جایگزین شد -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><path d="M12 8a4 4 0 1 0 4 4 4 4 0 0 0-4-4z"/></svg>
+                    </div>
                     <h3>آموزش مفهومی</h3>
                     <p>ما به جای حفظ کردن، مفاهیم را عمیق و کاربردی به شما آموزش می‌دهیم.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="icon">👨‍🏫</div>
+                    <div class="icon">
+                        <!-- آیکون جدید جایگزین شد -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5zm0-8a3 3 0 1 1-3 3 3 3 0 0 1 3-3zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    </div>
                     <h3>مدرس متخصص</h3>
                     <p>تدریس توسط معلم با‌سابقه علوم که با نیازهای شما کاملاً آشناست.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="icon">📱</div>
+                    <div class="icon">
+                        <!-- آیکون جدید جایگزین شد -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1H7a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zM12 18h.01"/></svg>
+                    </div>
                     <h3>دسترسی آسان</h3>
                     <p>در هر زمان و هر مکان، با موبایل یا کامپیوتر به محتوای آموزشی دسترسی دارید.</p>
                 </div>
